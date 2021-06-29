@@ -99,6 +99,9 @@ type TextFormatter struct {
 
 	// The max length of the level text, generated dynamically on init
 	levelTextMaxLength int
+
+	// Log output fields separator by, default is one space
+	FieldSeparator byte
 }
 
 func (f *TextFormatter) init(entry *Entry) {
@@ -318,7 +321,11 @@ func (f *TextFormatter) needsQuoting(text string) bool {
 
 func (f *TextFormatter) appendKeyValue(b *bytes.Buffer, key string, value interface{}) {
 	if b.Len() > 0 {
-		b.WriteByte(' ')
+		if f.FieldSeparator <= 0 {
+			b.WriteByte(' ')
+		} else {
+			b.WriteByte(f.FieldSeparator)
+		}
 	}
 	b.WriteString(key)
 	b.WriteByte('=')
