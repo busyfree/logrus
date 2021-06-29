@@ -102,6 +102,8 @@ type TextFormatter struct {
 
 	// Log output fields separator by, default is one space
 	FieldSeparator byte
+
+	DisableFieldName bool
 }
 
 func (f *TextFormatter) init(entry *Entry) {
@@ -327,8 +329,10 @@ func (f *TextFormatter) appendKeyValue(b *bytes.Buffer, key string, value interf
 			b.WriteByte(f.FieldSeparator)
 		}
 	}
-	b.WriteString(key)
-	b.WriteByte('=')
+	if !f.DisableFieldName {
+		b.WriteString(key)
+		b.WriteByte('=')
+	}
 	f.appendValue(b, value)
 }
 
