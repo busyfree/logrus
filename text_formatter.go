@@ -103,6 +103,7 @@ type TextFormatter struct {
 	// Log output fields separator by, default is one space
 	FieldSeparator byte
 
+	// DisableFieldName will disable field name output
 	DisableFieldName bool
 }
 
